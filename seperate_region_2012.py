@@ -37,22 +37,23 @@ lon_max_fl = 140.60
 
 
 def main():
-    for m in xrange(6, 8):
-        for d in xrange(1, 32):
-            if m == 6 and d == 31:
-                continue
-            with open('/media/fan/HDPC-UT/ZDC/TrainingForMapping/2012{:02d}{:02d}.csv'.format(m, d), 'r') as f_in:
-                with open('/media/fan/HDPC-UT/ZDC/TrainingForMapping/fukuoka/2012{:02d}{:02d}.csv'.format(m, d), 'w') as f_out_f:
-                    with open('/media/fan/HDPC-UT/ZDC/TrainingForMapping/nagano/2012{:02d}{:02d}.csv'.format(m, d), 'w') as f_out_n:
-                        for uid_str, time_str, lat_str, lon_str, tmp1_str, tmp2_str in csv.reader(f_in):
-                            uid = int(uid_str)
-                            cur_time = time.mktime(time.strptime(time_str,'%Y-%m-%d %H:%M:%S'))
-                            lat = float(lat_str)
-                            lon = float(lon_str)
+    with open('fukushima_coastal.csv', 'w') as f_out_fc:
+        with open('fukushima_land.csv', 'w') as f_out_fl:
+            for m in xrange(3, 5):
+                for d in xrange(1, 32):
+                    if m == 4 and d == 31:
+                        continue
+                    with open('/data/zdc/2010/2010{:02d}{:02d}.csv'.format(m, d), 'r') as f_in:
+                        for uid_str, time_str, lat_str, lon_str, _, _, _ in csv.reader(f_in):
+                            # cnt += 1
+                            # print cnt
+                            uid = int(uid_str[3:])
+                            lat = float(lat_str) / 3600000.0
+                            lon = float(lon_str) / 3600000.0
                             if lat > lat_min_f and lat < lat_max_f and lon > lon_min_f and lon < lon_max_f:
-                                f_out_f.write('{},{},{},{}\n'.format(uid, lat, lon, time.strftime('%Y-%m-%d %H:%M:%S',time.localtime(cur_time))))
+                                f_out_fc.write('{},{},{},{}\n'.format(uid, lat, lon, time_str))
                             elif lat > lat_min_n and lat < lat_max_n and lon > lon_min_n and lon < lon_max_n:
-                                f_out_n.write('{},{},{},{}\n'.format(uid, lat, lon, time.strftime('%Y-%m-%d %H:%M:%S',time.localtime(cur_time))))
+                                f_out_fl.write('{},{},{},{}\n'.format(uid, lat, lon, time_str))
 
 
 if __name__ == '__main__':
