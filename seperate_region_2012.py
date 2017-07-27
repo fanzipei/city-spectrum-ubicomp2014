@@ -43,7 +43,9 @@ def main():
                 for d in xrange(1, 32):
                     if m == 4 and d == 31:
                         continue
-                    with open('/data/zdc/2010/2010{:02d}{:02d}.csv'.format(m, d), 'r') as f_in:
+                    filename = '/data/zdc/2010/2011{:02d}{:02d}.csv'.format(m, d)
+                    print 'Reading {}'.format(filename)
+                    with open(filename, 'r') as f_in:
                         for uid_str, time_str, lat_str, lon_str, _, _, _ in csv.reader(f_in):
                             # cnt += 1
                             # print cnt
