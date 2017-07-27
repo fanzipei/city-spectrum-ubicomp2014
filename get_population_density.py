@@ -37,7 +37,7 @@ lon_min_fl = 140.28
 lon_max_fl = 140.60
 
 num_time = 48
-num_days = 61
+num_days = 120
 dt = 24 * 3600 / num_time
 
 def get_loc_idx(lat, lon, lat_min, lon_min, lat_max, lon_max, num_dislat):
@@ -54,10 +54,10 @@ num_dislat = int((lat_max - lat_min + 1e-6) / 0.008)
 num_dislon = int((lon_max - lon_min + 1e-6) / 0.010)
 
 population_density = np.zeros([num_dislat * num_dislon, num_time * num_days])
-init_time = time.mktime(time.strptime('2011-02-28 23:50:00','%Y-%m-%d %H:%M:%S'))
+init_time = time.mktime(time.strptime('2011-01-31 23:50:00','%Y-%m-%d %H:%M:%S'))
 
 with open('fukushima_coastal.csv', 'r') as f:
-    for uid_str, time_str, lat_str, lon_str in csv.reader(f):
+    for uid_str, lat_str, lon_str, time_str in csv.reader(f):
         uid = int(uid_str)
         lat = float(lat_str)
         lon = float(lon_str)
@@ -81,10 +81,10 @@ num_dislat = int((lat_max - lat_min + 1e-6) / 0.008)
 num_dislon = int((lon_max - lon_min + 1e-6) / 0.010)
 
 population_density = np.zeros([num_dislat * num_dislon, num_time * num_days])
-init_time = time.mktime(time.strptime('2011-02-28 23:50:00','%Y-%m-%d %H:%M:%S'))
+init_time = time.mktime(time.strptime('2011-01-31 23:50:00','%Y-%m-%d %H:%M:%S'))
 
 with open('fukushima_land.csv', 'r') as f:
-    for uid_str, time_str, lat_str, lon_str in csv.reader(f):
+    for uid_str, lat_str, lon_str, time_str in csv.reader(f):
         uid = int(uid_str)
         lat = float(lat_str)
         lon = float(lon_str)
