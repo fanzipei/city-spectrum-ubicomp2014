@@ -39,23 +39,24 @@ lon_max_fl = 140.60
 def main():
     with open('fukushima_coastal.csv', 'w') as f_out_fc:
         with open('fukushima_land.csv', 'w') as f_out_fl:
-            for m in xrange(3, 5):
+            for m in xrange(2, 6):
                 for d in xrange(1, 32):
-                    if m == 4 and d == 31:
+                    if m == 2 and d >= 29:
+                        continue
+                    if m == 4 and d >= 31:
                         continue
                     filename = '/data/zdc/2010/2011{:02d}{:02d}.csv'.format(m, d)
                     print 'Reading {}'.format(filename)
                     with open(filename, 'r') as f_in:
                         for uid_str, time_str, lat_str, lon_str, _, _, _ in csv.reader(f_in):
-                            # cnt += 1
-                            # print cnt
                             uid = int(uid_str[3:])
                             lat = float(lat_str) / 3600000.0
                             lon = float(lon_str) / 3600000.0
-                            time_str = time.strftime('%Y-%m-%d %H:%M:%S', time.strptime(time_str, '%Y%m%d%H%M%S'))
                             if lat > lat_min_f and lat < lat_max_f and lon > lon_min_f and lon < lon_max_f:
+                                time_str = time.strftime('%Y-%m-%d %H:%M:%S', time.strptime(time_str, '%Y%m%d%H%M%S'))
                                 f_out_fc.write('{},{},{},{}\n'.format(uid, lat, lon, time_str))
                             elif lat > lat_min_n and lat < lat_max_n and lon > lon_min_n and lon < lon_max_n:
+                                time_str = time.strftime('%Y-%m-%d %H:%M:%S', time.strptime(time_str, '%Y%m%d%H%M%S'))
                                 f_out_fl.write('{},{},{},{}\n'.format(uid, lat, lon, time_str))
 
 
