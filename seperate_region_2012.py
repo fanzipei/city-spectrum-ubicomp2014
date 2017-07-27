@@ -52,6 +52,7 @@ def main():
                             uid = int(uid_str[3:])
                             lat = float(lat_str) / 3600000.0
                             lon = float(lon_str) / 3600000.0
+                            time_str = time.strftime('%Y-%m-%d %H:%M:%S', time.strptime(time_str, '%Y%m%d%H%M%S'))
                             if lat > lat_min_f and lat < lat_max_f and lon > lon_min_f and lon < lon_max_f:
                                 f_out_fc.write('{},{},{},{}\n'.format(uid, lat, lon, time_str))
                             elif lat > lat_min_n and lat < lat_max_n and lon > lon_min_n and lon < lon_max_n:
